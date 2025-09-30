@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🕐 Horloge Interactive</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Apprends à Lire l'Heure</h1>
+        
+        <div class="score-container">
+            Score : <span id="score">0</span> / <span id="total">0</span>
+        </div>
+        
+        <div class="question-container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3>Quelle heure est-il ?</h3>
+                <button id="toggleMinutes" onclick="toggleAffichageMinutes()">👁️ Afficher les minutes</button>
+            </div>
+            
+            <canvas id="horlogeExercice" width="300" height="300"></canvas>
+            
+            <div class="inputs-container">
+                <div class="input-group">
+                    <label>Heures</label>
+                    <input type="number" id="inputHeures" class="time-input" min="0" max="23" placeholder="0" 
+                           oninput="gererNavigationHeures()" onkeydown="gererToucheEntree(event)">
+                </div>
+                
+                <div class="input-group">
+                    <label>Minutes</label>
+                    <input type="number" id="inputMinutes" class="time-input" min="0" max="59" placeholder="0" 
+                           oninput="gererNavigationMinutes()" onkeydown="gererToucheEntree(event)">
+                </div>
+            </div>
+        </div>
+        
+        <div id="feedback" class="feedback" style="display: none;"></div>
+    </div>
+
+    <!-- Module de dessin de l'horloge -->
+    <script src="horloge.js"></script>
+    <!-- Module d'animations -->
+    <script src="animations.js"></script>
+    <!-- Module de logique de l'exercice -->
+    <script src="script.js"></script>
+</body>
+</html>

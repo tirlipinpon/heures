@@ -1,0 +1,315 @@
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    transition: background 0.5s ease;
+}
+
+.container {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+#horloge {
+    border: 5px solid #fff;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 0 30px rgba(0,0,0,0.3);
+    margin: 20px 0;
+}
+
+.heure-input {
+    margin: 20px 0;
+    padding: 15px;
+    font-size: 1.5em;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    text-align: center;
+    font-weight: bold;
+    width: 200px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.heure-input:focus {
+    outline: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.controls {
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.mode-selector {
+    margin-bottom: 20px;
+}
+
+.mode-btn {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.mode-btn.active {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.05);
+}
+
+.exercice-container {
+    display: none;
+    margin-top: 20px;
+}
+
+.exercice-container.active {
+    display: block;
+}
+
+.question-container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px 0;
+}
+
+.inputs-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.input-group label {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.time-input {
+    width: 80px;
+    height: 60px;
+    font-size: 2em;
+    text-align: center;
+    border: none;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.time-input:focus {
+    outline: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    background: white;
+    transform: scale(1.05);
+}
+
+.time-input:valid {
+    background: rgba(76, 175, 80, 0.1);
+    border: 2px solid rgba(76, 175, 80, 0.3);
+}
+
+.submit-btn {
+    padding: 15px 30px;
+    font-size: 1.3em;
+    border: none;
+    border-radius: 25px;
+    background: rgba(76, 175, 80, 0.8);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(76, 175, 80, 0.9);
+    font-weight: bold;
+}
+
+.submit-btn:hover {
+    background: rgba(76, 175, 80, 1);
+    transform: translateY(-2px);
+}
+
+.submit-btn:disabled {
+    background: rgba(150, 150, 150, 0.5);
+    border-color: rgba(150, 150, 150, 0.5);
+    cursor: not-allowed;
+    transform: none;
+}
+
+.score-container {
+    margin: 20px 0;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.feedback {
+    margin: 15px 0;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.feedback.correct {
+    background: rgba(76, 175, 80, 0.3);
+    color: #4CAF50;
+}
+
+.feedback.incorrect {
+    background: rgba(244, 67, 54, 0.3);
+    color: #f44336;
+}
+
+.difficulte-selector {
+    margin: 15px 0;
+}
+
+.difficulte-btn {
+    padding: 8px 16px;
+    margin: 5px;
+    border: none;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.difficulte-btn.active {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Animations de célébration SPECTACULAIRES */
+@keyframes explode {
+    0% { 
+        transform: scale(1) rotate(0deg);
+        filter: brightness(1);
+    }
+    50% { 
+        transform: scale(1.4) rotate(10deg);
+        filter: brightness(1.5) drop-shadow(0 0 30px rgba(255, 215, 0, 0.8));
+    }
+    100% { 
+        transform: scale(1) rotate(0deg);
+        filter: brightness(1);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.1); }
+}
+
+@keyframes twinkle {
+    0%, 100% { 
+        transform: scale(0) rotate(0deg);
+        opacity: 0;
+    }
+    50% { 
+        transform: scale(1.5) rotate(180deg);
+        opacity: 1;
+        filter: drop-shadow(0 0 10px gold);
+    }
+}
+
+@keyframes flash {
+    0% { opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { opacity: 0; }
+}
+
+@keyframes scorePopup {
+    0% { 
+        transform: scale(1);
+    }
+    50% { 
+        transform: scale(2);
+        color: #FFD700;
+        text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    }
+    100% { 
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { 
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7);
+    }
+    50% { 
+        box-shadow: 0 0 20px 10px rgba(40, 167, 69, 0);
+    }
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(
+            calc(cos(var(--angle)) * var(--distance)), 
+            calc(sin(var(--angle)) * var(--distance))
+        ) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+.feedback.correct {
+    animation: bounce 0.6s ease-in-out;
+    font-size: 2em;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+}
