@@ -11,13 +11,15 @@ let heureActuelle = null;
 // Variables pour le système de niveaux
 let niveauActuel = 1;
 let succesConsecutifs = 0;
+let questionsNiveau7 = 0;
 const NIVEAUX = {
     1: { nom: "Heures du matin", heures: [6,7,8,9,10,11,12], minutes: [0] },
     2: { nom: "Quarts du matin", heures: [6,7,8,9,10,11,12], minutes: [0,15,30,45] },
     3: { nom: "Toutes minutes du matin", heures: [6,7,8,9,10,11,12], minutes: "toutes" },
     4: { nom: "Heures de l'après-midi", heures: [13,14,15,16,17,18,19,20,21,22,23,0], minutes: [0] },
     5: { nom: "Quarts de l'après-midi", heures: [13,14,15,16,17,18,19,20,21,22,23,0], minutes: [0,15,30,45] },
-    6: { nom: "Toutes minutes après-midi", heures: [13,14,15,16,17,18,19,20,21,22,23,0], minutes: "toutes" }
+    6: { nom: "Toutes minutes après-midi", heures: [13,14,15,16,17,18,19,20,21,22,23,0], minutes: "toutes" },
+    7: { nom: "Maîtrise complète", heures: "alternance", minutes: "toutes" }
 };
 
 /**
@@ -28,7 +30,18 @@ function genererHeureAleatoire() {
     const configNiveau = NIVEAUX[niveauActuel];
     
     // Choisir une heure selon le niveau
-    const heures = configNiveau.heures[Math.floor(Math.random() * configNiveau.heures.length)];
+    let heures;
+    if (configNiveau.heures === "alternance") {
+        // Niveau 7: alternance entre matin et après-midi
+        const isMatin = Math.random() < 0.5;
+        if (isMatin) {
+            heures = [6,7,8,9,10,11,12][Math.floor(Math.random() * 7)];
+        } else {
+            heures = [13,14,15,16,17,18,19,20,21,22,23,0][Math.floor(Math.random() * 12)];
+        }
+    } else {
+        heures = configNiveau.heures[Math.floor(Math.random() * configNiveau.heures.length)];
+    }
     
     // Choisir les minutes selon le niveau
     let minutes;
@@ -72,10 +85,10 @@ function verifierReponse() {
         // Lancer l'animation de célébration SPECTACULAIRE
         lancerAnimationCelebration();
         
-        // Proposer une nouvelle question après 4 secondes
+        // Proposer une nouvelle question après 1.5 secondes
         setTimeout(() => {
             nouvelleQuestion();
-        }, 4000);
+        }, 1500);
     }
 }
 
@@ -113,7 +126,7 @@ function gererProgressionNiveau() {
     succesConsecutifs++;
     
     // Vérifier si on peut passer au niveau suivant
-    if (succesConsecutifs >= 5 && niveauActuel < 6) {
+    if (succesConsecutifs >= 5 && niveauActuel < 7) {
         niveauActuel++;
         succesConsecutifs = 0;
         
@@ -124,6 +137,11 @@ function gererProgressionNiveau() {
         }, 1000);
     }
     
+    // Au niveau 7, compter les questions pour montrer la progression
+    if (niveauActuel === 7) {
+        questionsNiveau7++;
+    }
+    
     mettreAJourAffichageProgression();
 }
 
@@ -132,7 +150,7 @@ function gererProgressionNiveau() {
  */
 function mettreAJourAffichageProgression() {
     const nomNiveau = NIVEAUX[niveauActuel].nom;
-    const progression = niveauActuel < 6 ? `${succesConsecutifs}/5` : 'Maître';
+    const progression = niveauActuel < 7 ? `${succesConsecutifs}/5` : `${questionsNiveau7} questions`;
     
     document.getElementById('titreNiveau').textContent = `Niveau ${niveauActuel} : ${nomNiveau}`;
     document.getElementById('progression').textContent = progression;
@@ -161,7 +179,7 @@ function nouvelleQuestion() {
     // Générer une nouvelle heure aléatoire
     heureActuelle = genererHeureAleatoire();
     
-    // Masquer les minutes par défaut (sauf si heure pile)
+    // Masquer les minutes par défaut (sauf si heure pile ou niveau 7)
     afficherMinutes = false;
     
     // Dessiner l'horloge avec la nouvelle heure
@@ -224,11 +242,11 @@ function gererNavigationHeures() {
             inputHeures.disabled = true;
             inputHeures.style.pointerEvents = 'none';
             
-            // Afficher automatiquement les minutes si ce n'est pas l'heure pile
-            if (heureActuelle.minutes !== 0) {
-                afficherMinutes = true;
-                dessinerHorlogeExercice(heureActuelle.heures, heureActuelle.minutes);
-            }
+    // Afficher automatiquement les minutes si ce n'est pas l'heure pile (sauf niveau 7)
+    if (heureActuelle.minutes !== 0 && niveauActuel !== 7) {
+        afficherMinutes = true;
+        dessinerHorlogeExercice(heureActuelle.heures, heureActuelle.minutes);
+    }
             
             // Passer aux minutes
             setTimeout(() => {
@@ -276,13 +294,13 @@ function gererNavigationMinutes() {
             inputMinutes.disabled = true;
             inputMinutes.style.pointerEvents = 'none';
             
-            // Si les DEUX sont corrects, lancer l'animation
-            const heures = parseInt(inputHeures.value);
-            if (heures === heureActuelle.heures) {
-                setTimeout(() => {
-                    verifierReponse();
-                }, 300);
-            }
+                // Si les DEUX sont corrects, lancer l'animation
+                const heures = parseInt(inputHeures.value);
+                if (heures === heureActuelle.heures) {
+                    setTimeout(() => {
+                        verifierReponse();
+                    }, 200);
+                }
         } else {
             // Indiquer que c'est incorrect
             inputMinutes.style.backgroundColor = '#ffcccc';
@@ -312,8 +330,8 @@ function toggleAffichageMinutes() {
     const inputHeures = document.getElementById('inputHeures');
     const heuresCorrectes = parseInt(inputHeures.value) === heureActuelle.heures;
     
-    // Si les heures sont correctes et ce n'est pas l'heure pile, les minutes sont déjà affichées
-    if (heuresCorrectes && heureActuelle.minutes !== 0) {
+    // Si les heures sont correctes et ce n'est pas l'heure pile, les minutes sont déjà affichées (sauf niveau 7)
+    if (heuresCorrectes && heureActuelle.minutes !== 0 && niveauActuel !== 7) {
         return; // Ne rien faire, les minutes sont déjà affichées automatiquement
     }
     
