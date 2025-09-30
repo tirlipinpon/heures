@@ -191,6 +191,22 @@ button:hover {
     margin: 20px 0;
     font-size: 1.2em;
     font-weight: bold;
+    text-align: center;
+}
+
+.score-container div {
+    margin: 5px 0;
+}
+
+#niveau {
+    color: #FFD700;
+    font-size: 1.1em;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+#progression {
+    color: #87CEEB;
+    font-size: 1em;
 }
 
 .feedback {

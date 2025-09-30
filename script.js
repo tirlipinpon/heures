@@ -8,30 +8,34 @@ let score = 0;
 let totalQuestions = 0;
 let heureActuelle = null;
 
+// Variables pour le système de niveaux
+let niveauActuel = 1;
+let succesConsecutifs = 0;
+const NIVEAUX = {
+    1: { nom: "Heures du matin", heures: [6,7,8,9,10,11,12], minutes: [0] },
+    2: { nom: "Quarts du matin", heures: [6,7,8,9,10,11,12], minutes: [0,15,30,45] },
+    3: { nom: "Toutes minutes du matin", heures: [6,7,8,9,10,11,12], minutes: "toutes" },
+    4: { nom: "Heures de l'après-midi", heures: [13,14,15,16,17,18,19,20,21,22,23,0], minutes: [0] },
+    5: { nom: "Quarts de l'après-midi", heures: [13,14,15,16,17,18,19,20,21,22,23,0], minutes: [0,15,30,45] },
+    6: { nom: "Toutes minutes après-midi", heures: [13,14,15,16,17,18,19,20,21,22,23,0], minutes: "toutes" }
+};
+
 /**
- * Génère une heure aléatoire avec des heures importantes privilégiées
+ * Génère une heure selon le niveau actuel
  * @returns {Object} Objet avec {heures, minutes}
  */
 function genererHeureAleatoire() {
-    let heures = Math.floor(Math.random() * 24);
-    let minutes;
+    const configNiveau = NIVEAUX[niveauActuel];
     
-    // 70% de chance d'avoir des heures importantes ou des quarts
-    if (Math.random() < 0.7) {
-        // 50% de chance d'avoir des heures importantes
-        if (Math.random() < 0.5) {
-            const heuresImportantes = [6, 9, 12, 14, 15, 18, 21, 24];
-            heures = heuresImportantes[Math.floor(Math.random() * heuresImportantes.length)];
-            // Pour l'heure 24, on utilise 0 (minuit)
-            if (heures === 24) heures = 0;
-        }
-        
-        // Privilégier les quarts d'heure
-        const quarts = [0, 15, 30, 45];
-        minutes = quarts[Math.floor(Math.random() * quarts.length)];
-    } else {
-        // 30% de chance d'avoir des minutes aléatoires
+    // Choisir une heure selon le niveau
+    const heures = configNiveau.heures[Math.floor(Math.random() * configNiveau.heures.length)];
+    
+    // Choisir les minutes selon le niveau
+    let minutes;
+    if (configNiveau.minutes === "toutes") {
         minutes = Math.floor(Math.random() * 60);
+    } else {
+        minutes = configNiveau.minutes[Math.floor(Math.random() * configNiveau.minutes.length)];
     }
     
     return { heures, minutes };
@@ -58,8 +62,9 @@ function verifierReponse() {
         inputHeures.style.pointerEvents = 'none';
         inputMinutes.style.pointerEvents = 'none';
         
-        // Mettre à jour le score
+        // Mettre à jour le score et gérer la progression
         mettreAJourScore(true);
+        gererProgressionNiveau();
         
         // Afficher le feedback de succès
         afficherFeedback('PARFAIT ! 🎉', 'correct');
@@ -99,6 +104,38 @@ function mettreAJourScore(estCorrect) {
     // Mettre à jour l'affichage
     document.getElementById('score').textContent = score;
     document.getElementById('total').textContent = totalQuestions;
+}
+
+/**
+ * Gère la progression entre les niveaux
+ */
+function gererProgressionNiveau() {
+    succesConsecutifs++;
+    
+    // Vérifier si on peut passer au niveau suivant
+    if (succesConsecutifs >= 5 && niveauActuel < 6) {
+        niveauActuel++;
+        succesConsecutifs = 0;
+        
+        // Message de félicitation pour le nouveau niveau
+        const nomNiveau = NIVEAUX[niveauActuel].nom;
+        setTimeout(() => {
+            afficherFeedback(`🎉 Niveau ${niveauActuel} : ${nomNiveau} !`, 'correct');
+        }, 1000);
+    }
+    
+    mettreAJourAffichageProgression();
+}
+
+/**
+ * Met à jour l'affichage de la progression
+ */
+function mettreAJourAffichageProgression() {
+    const nomNiveau = NIVEAUX[niveauActuel].nom;
+    const progression = niveauActuel < 6 ? `${succesConsecutifs}/5` : 'Maître';
+    
+    document.getElementById('niveau').textContent = `Niveau ${niveauActuel} : ${nomNiveau}`;
+    document.getElementById('progression').textContent = progression;
 }
 
 /**
@@ -281,6 +318,7 @@ function toggleAffichageMinutes() {
  * Initialise l'exercice au chargement de la page
  */
 function initialiserExercice() {
+    mettreAJourAffichageProgression();
     nouvelleQuestion();
 }
 
