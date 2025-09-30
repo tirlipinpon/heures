@@ -134,7 +134,7 @@ function mettreAJourAffichageProgression() {
     const nomNiveau = NIVEAUX[niveauActuel].nom;
     const progression = niveauActuel < 6 ? `${succesConsecutifs}/5` : 'Maître';
     
-    document.getElementById('niveau').textContent = `Niveau ${niveauActuel} : ${nomNiveau}`;
+    document.getElementById('titreNiveau').textContent = `Niveau ${niveauActuel} : ${nomNiveau}`;
     document.getElementById('progression').textContent = progression;
 }
 
@@ -160,6 +160,9 @@ function afficherFeedback(message, type) {
 function nouvelleQuestion() {
     // Générer une nouvelle heure aléatoire
     heureActuelle = genererHeureAleatoire();
+    
+    // Masquer les minutes par défaut (sauf si heure pile)
+    afficherMinutes = false;
     
     // Dessiner l'horloge avec la nouvelle heure
     dessinerHorlogeExercice(heureActuelle.heures, heureActuelle.minutes);
@@ -221,14 +224,22 @@ function gererNavigationHeures() {
             inputHeures.disabled = true;
             inputHeures.style.pointerEvents = 'none';
             
+            // Afficher automatiquement les minutes si ce n'est pas l'heure pile
+            if (heureActuelle.minutes !== 0) {
+                afficherMinutes = true;
+                dessinerHorlogeExercice(heureActuelle.heures, heureActuelle.minutes);
+            }
+            
             // Passer aux minutes
             setTimeout(() => {
                 inputMinutes.focus();
                 inputMinutes.select();
             }, 100);
         } else {
-            // Indiquer que c'est incorrect
+            // Indiquer que c'est incorrect et masquer les minutes
             inputHeures.style.backgroundColor = '#ffcccc';
+            afficherMinutes = false;
+            dessinerHorlogeExercice(heureActuelle.heures, heureActuelle.minutes);
         }
         
         // Si l'heure a 2 chiffres, passer aux minutes même si incorrect
@@ -294,18 +305,27 @@ function gererToucheEntree(event) {
 }
 
 /**
- * Toggle l'affichage des minutes sur l'horloge
+ * Toggle l'affichage des minutes sur l'horloge (seulement si manuel)
  */
 function toggleAffichageMinutes() {
+    // Vérifier si les heures sont correctes et les minutes ne sont pas 0
+    const inputHeures = document.getElementById('inputHeures');
+    const heuresCorrectes = parseInt(inputHeures.value) === heureActuelle.heures;
+    
+    // Si les heures sont correctes et ce n'est pas l'heure pile, les minutes sont déjà affichées
+    if (heuresCorrectes && heureActuelle.minutes !== 0) {
+        return; // Ne rien faire, les minutes sont déjà affichées automatiquement
+    }
+    
     // Toggle la variable globale dans horloge.js
     afficherMinutes = !afficherMinutes;
     
-    // Mettre à jour le texte du bouton
+    // Mettre à jour l'icône du bouton
     const bouton = document.getElementById('toggleMinutes');
     if (afficherMinutes) {
-        bouton.textContent = '🙈 Masquer les minutes';
+        bouton.textContent = '🙈';
     } else {
-        bouton.textContent = '👁️ Afficher les minutes';
+        bouton.textContent = '👁️';
     }
     
     // Redessiner l'horloge avec ou sans les minutes

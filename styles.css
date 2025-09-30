@@ -21,10 +21,20 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-h1 {
-    margin-bottom: 20px;
-    font-size: 2.5em;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+/* Mobile: container collé au top */
+@media (max-width: 768px) {
+    body {
+        justify-content: flex-start;
+        padding-top: 0;
+    }
+    
+    .container {
+        margin: 0;
+        padding: 15px;
+        border-radius: 0;
+        min-height: 100vh;
+        width: 100%;
+    }
 }
 
 #horloge {
@@ -32,11 +42,11 @@ h1 {
     border-radius: 50%;
     background: white;
     box-shadow: 0 0 30px rgba(0,0,0,0.3);
-    margin: 20px 0;
+
 }
 
 .heure-input {
-    margin: 20px 0;
+
     padding: 15px;
     font-size: 1.5em;
     border: none;
@@ -76,9 +86,6 @@ button:hover {
     transform: translateY(-2px);
 }
 
-.mode-selector {
-    margin-bottom: 20px;
-}
 
 .mode-btn {
     padding: 10px 20px;
@@ -109,9 +116,9 @@ button:hover {
 
 .question-container {
     background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
+    padding: 0 20px 20px 20px;
     border-radius: 15px;
-    margin: 20px 0;
+
 }
 
 .inputs-container {
@@ -119,7 +126,7 @@ button:hover {
     gap: 20px;
     justify-content: center;
     align-items: center;
-    margin: 20px 0;
+
 }
 
 .input-group {
@@ -188,20 +195,22 @@ button:hover {
 }
 
 .score-container {
-    margin: 20px 0;
-    font-size: 1.2em;
+ 
+    font-size: 1.1em;
     font-weight: bold;
     text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
-.score-container div {
-    margin: 5px 0;
-}
-
-#niveau {
+#titreNiveau {
     color: #FFD700;
-    font-size: 1.1em;
+    font-size: 1.2em;
     text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    margin: 0;
 }
 
 #progression {

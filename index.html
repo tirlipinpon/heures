@@ -7,20 +7,14 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>🎯 Apprends à Lire l'Heure</h1>
-        
+    <div class="container">        
         <div class="score-container">
-            <div>Score : <span id="score">0</span> / <span id="total">0</span></div>
-            <div id="niveau">Niveau 1 : Heures du matin</div>
-            <div id="progression">0/5</div>
+            <span>Score : <span id="score">0</span>/<span id="total">0</span></span>
+            <h3 id="titreNiveau">Niveau 1 : Heures du matin</h3>
+            <span id="progression">0/5</span>
         </div>
         
         <div class="question-container">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h3>Quelle heure est-il ?</h3>
-                <button id="toggleMinutes" onclick="toggleAffichageMinutes()">👁️ Afficher les minutes</button>
-            </div>
             
             <canvas id="horlogeExercice" width="300" height="300"></canvas>
             
@@ -33,8 +27,11 @@
                 
                 <div class="input-group">
                     <label>Minutes</label>
-                    <input type="number" id="inputMinutes" class="time-input" min="0" max="59" placeholder="0" 
-                           oninput="gererNavigationMinutes()" onkeydown="gererToucheEntree(event)">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <input type="number" id="inputMinutes" class="time-input" min="0" max="59" placeholder="0" 
+                               oninput="gererNavigationMinutes()" onkeydown="gererToucheEntree(event)">
+                        <button id="toggleMinutes" onclick="toggleAffichageMinutes()">👁️</button>
+                    </div>
                 </div>
             </div>
         </div>
