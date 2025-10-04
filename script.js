@@ -23,35 +23,50 @@ const NIVEAUX = {
 };
 
 /**
- * Génère une heure selon le niveau actuel
+ * Génère une heure selon le niveau actuel (différente de la précédente)
  * @returns {Object} Objet avec {heures, minutes}
  */
 function genererHeureAleatoire() {
     const configNiveau = NIVEAUX[niveauActuel];
+    let nouvelleHeure;
+    let tentatives = 0;
+    const maxTentatives = 50;
     
-    // Choisir une heure selon le niveau
-    let heures;
-    if (configNiveau.heures === "alternance") {
-        // Niveau 7: alternance entre matin et après-midi
-        const isMatin = Math.random() < 0.5;
-        if (isMatin) {
-            heures = [6,7,8,9,10,11,12][Math.floor(Math.random() * 7)];
+    // Générer une nouvelle heure différente de la précédente
+    do {
+        // Choisir une heure selon le niveau
+        let heures;
+        if (configNiveau.heures === "alternance") {
+            // Niveau 7: alternance entre matin et après-midi
+            const isMatin = Math.random() < 0.5;
+            if (isMatin) {
+                heures = [6,7,8,9,10,11,12][Math.floor(Math.random() * 7)];
+            } else {
+                heures = [13,14,15,16,17,18,19,20,21,22,23,0][Math.floor(Math.random() * 12)];
+            }
         } else {
-            heures = [13,14,15,16,17,18,19,20,21,22,23,0][Math.floor(Math.random() * 12)];
+            heures = configNiveau.heures[Math.floor(Math.random() * configNiveau.heures.length)];
         }
-    } else {
-        heures = configNiveau.heures[Math.floor(Math.random() * configNiveau.heures.length)];
-    }
+        
+        // Choisir les minutes selon le niveau
+        let minutes;
+        if (configNiveau.minutes === "toutes") {
+            minutes = Math.floor(Math.random() * 60);
+        } else {
+            minutes = configNiveau.minutes[Math.floor(Math.random() * configNiveau.minutes.length)];
+        }
+        
+        nouvelleHeure = { heures, minutes };
+        tentatives++;
+        
+    } while (
+        heureActuelle !== null && 
+        nouvelleHeure.heures === heureActuelle.heures && 
+        nouvelleHeure.minutes === heureActuelle.minutes &&
+        tentatives < maxTentatives
+    );
     
-    // Choisir les minutes selon le niveau
-    let minutes;
-    if (configNiveau.minutes === "toutes") {
-        minutes = Math.floor(Math.random() * 60);
-    } else {
-        minutes = configNiveau.minutes[Math.floor(Math.random() * configNiveau.minutes.length)];
-    }
-    
-    return { heures, minutes };
+    return nouvelleHeure;
 }
 
 /**
@@ -250,7 +265,13 @@ function gererNavigationHeures() {
             
             // Vérifier si les minutes sont déjà correctes (cas où on remplit les heures après les minutes)
             const minutes = parseInt(inputMinutes.value);
-            if (minutes === heureActuelle.minutes) {
+            if (!isNaN(minutes) && minutes === heureActuelle.minutes) {
+                // Les deux champs sont corrects, bloquer aussi les minutes visuellement
+                inputMinutes.style.backgroundColor = '#d4edda';
+                inputMinutes.style.border = '3px solid #28a745';
+                inputMinutes.disabled = true;
+                inputMinutes.style.pointerEvents = 'none';
+                
                 setTimeout(() => {
                     verifierReponse();
                 }, 200);

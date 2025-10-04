@@ -14,7 +14,7 @@ let afficherMinutes = false;
 function dessinerHorlogeExercice(heures, minutes) {
     const canvasExercice = document.getElementById('horlogeExercice');
     const ctxExercice = canvasExercice.getContext('2d');
-    const rayonExercice = 110;
+    const rayonExercice = 145;
     const centreXExercice = canvasExercice.width / 2;
     const centreYExercice = canvasExercice.height / 2;
     
