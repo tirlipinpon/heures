@@ -51,7 +51,7 @@ body {
         flex: 1;
         overflow-y: auto;
         min-height: 0;
-        max-height: 500px;
+        
     }
     
     /* Taille du canvas sur mobile */
@@ -262,7 +262,7 @@ button:hover {
     font-weight: bold;
     text-align: center;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     gap: 15px;
