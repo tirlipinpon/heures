@@ -248,11 +248,19 @@ function gererNavigationHeures() {
         dessinerHorlogeExercice(heureActuelle.heures, heureActuelle.minutes);
     }
             
-            // Passer aux minutes
-            setTimeout(() => {
-                inputMinutes.focus();
-                inputMinutes.select();
-            }, 100);
+            // Vérifier si les minutes sont déjà correctes (cas où on remplit les heures après les minutes)
+            const minutes = parseInt(inputMinutes.value);
+            if (minutes === heureActuelle.minutes) {
+                setTimeout(() => {
+                    verifierReponse();
+                }, 200);
+            } else {
+                // Passer aux minutes
+                setTimeout(() => {
+                    inputMinutes.focus();
+                    inputMinutes.select();
+                }, 100);
+            }
         } else {
             // Indiquer que c'est incorrect et masquer les minutes
             inputHeures.style.backgroundColor = '#ffcccc';
