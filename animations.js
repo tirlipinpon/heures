@@ -195,13 +195,15 @@ function creerParticule() {
 }
 
 /**
- * Anime le score qui monte
+ * Anime la progression qui monte
  */
 function animerScoreMontant() {
-    const scoreElement = document.getElementById('score');
-    scoreElement.style.animation = 'scorePopup 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
-    
-    setTimeout(() => {
-        scoreElement.style.animation = '';
-    }, 600);
+    const progressionElement = document.getElementById('progression');
+    if (progressionElement) {
+        progressionElement.style.animation = 'scorePopup 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        
+        setTimeout(() => {
+            progressionElement.style.animation = '';
+        }, 600);
+    }
 }

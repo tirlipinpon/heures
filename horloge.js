@@ -62,10 +62,10 @@ function dessinerChiffres12h(ctx, centreX, centreY, rayon, heures) {
         // Si c'est l'après-midi/soir, rendre les heures 1-12 plus pâles
         if (heures >= 13 || heures === 0) {
             ctx.fillStyle = '#999'; // Gris moyen (plus visible que #ccc)
-            ctx.font = '14px Arial'; // Moins gras
+            ctx.font = '18px Arial'; // Moins gras
         } else {
             ctx.fillStyle = '#333'; // Noir
-            ctx.font = 'bold 14px Arial';
+            ctx.font = 'bold 18px Arial';
         }
         
         ctx.textAlign = 'center';
@@ -91,7 +91,7 @@ function dessinerChiffres24h(ctx, centreX, centreY, rayon, heures) {
             const y = centreY + Math.sin(angle) * (rayon + 15);
             
             ctx.fillStyle = '#000';
-            ctx.font = 'bold 14px Arial'; // Même taille que les heures intérieures
+            ctx.font = 'bold 18px Arial'; // Même taille que les heures intérieures
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillText(heure24.toString(), x, y);
@@ -194,8 +194,8 @@ function dessinerChiffresMinutes(ctx, centreX, centreY, rayon) {
         
         // Dessiner le contour blanc pour la lisibilité
         ctx.strokeStyle = '#fff';
-        ctx.lineWidth = 3;
-        ctx.font = 'bold 11px Arial';
+        ctx.lineWidth = 4;
+        ctx.font = 'bold 14px Arial';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.strokeText(minutes.toString(), x, y);

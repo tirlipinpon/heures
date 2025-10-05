@@ -8,6 +8,22 @@ Ce projet utilise le versionnage sémantique (Semantic Versioning).
 
 ## Historique des versions
 
+### v1.1.4 - 2025-10-04
+
+- Correction : Modification de l'animation pour animer la 'progression' au lieu du 'score' supprimé (animations.js ligne 201)
+
+### v1.1.3 - 2025-10-04
+
+- Correction : Suppression des références aux éléments HTML 'score' et 'total' dans script.js pour corriger l'erreur JavaScript
+
+### v1.1.2 - 2025-10-04
+
+- Amélioration : Remplacement de "Score : X/Y" par "Progression : X/5" - affichage simplifié et plus pertinent pour suivre la progression vers le prochain niveau
+
+### v1.1.1 - 2025-10-04
+
+- Amélioration : Horloge encore plus grande sur mobile (360px au lieu de 330px) et chiffres agrandis pour meilleure lisibilité (18px pour heures, 14px pour minutes)
+
 ### v1.1.0 - 2025-10-04
 
 - Amélioration : Horloge agrandie sur toutes les plateformes - Desktop: 450x450px (au lieu de 350x350), Mobile: 330px (au lieu de 300px), rayon ajusté à 145

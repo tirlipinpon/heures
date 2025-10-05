@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="version">v1.1.0</div>
+        <div class="version">v1.1.4</div>
         
         <div class="question-container">
             <canvas id="horlogeExercice" width="450" height="450"></canvas>
@@ -16,15 +16,15 @@
             <div class="inputs-container">
                 <div class="input-group">
                     <label>Heures</label>
-                    <input type="number" id="inputHeures" class="time-input" min="0" max="23" placeholder="0" 
-                           oninput="gererNavigationHeures()" onkeydown="gererToucheEntree(event)">
+                    <input type="number" id="inputHeures" class="time-input" min="0" max="23" maxlength="2" placeholder="x" 
+                           oninput="gererNavigationHeures()" onkeydown="gererToucheEntree(event)" onfocus="gererFocusInput(this)">
                 </div>
                 
                 <div class="input-group">
                     <label>Minutes</label>
                     <div style="display: flex; align-items: center; gap: 10px;">
-                        <input type="number" id="inputMinutes" class="time-input" min="0" max="59" placeholder="0" 
-                               oninput="gererNavigationMinutes()" onkeydown="gererToucheEntree(event)">
+                        <input type="number" id="inputMinutes" class="time-input" min="0" max="59" maxlength="2" placeholder="x" 
+                               oninput="gererNavigationMinutes()" onkeydown="gererToucheEntree(event)" onfocus="gererFocusInput(this)">
                         <button id="toggleMinutes" onclick="toggleAffichageMinutes()">👁️</button>
                     </div>
                 </div>
@@ -32,9 +32,8 @@
         </div>
         
         <div class="score-container">
-            <span>Score : <span id="score">0</span>/<span id="total">0</span></span>
+            <span>Progression : <span id="progression">0/5</span></span>
             <h3 id="titreNiveau">Niveau 1 : Heures du matin</h3>
-            <span id="progression">0/5</span>
         </div>
         
         <div id="feedback" class="feedback" style="display: none;"></div>

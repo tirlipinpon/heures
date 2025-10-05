@@ -56,10 +56,10 @@ body {
     
     /* Taille du canvas sur mobile */
     #horlogeExercice {
-        max-width: 330px;
-        max-height: 330px;
-        width: 330px !important;
-        height: 330px !important;
+        max-width: 360px;
+        max-height: 360px;
+        width: 360px !important;
+        height: 360px !important;
         margin: 5px 0;
     }
     

@@ -14,8 +14,8 @@ let succesConsecutifs = 0;
 let questionsNiveau7 = 0;
 const NIVEAUX = {
     1: { nom: "Heures du matin", heures: [6,7,8,9,10,11,12], minutes: [0] },
-    2: { nom: "Quarts du matin", heures: [6,7,8,9,10,11,12], minutes: [0,15,30,45] },
-    3: { nom: "Toutes minutes du matin", heures: [6,7,8,9,10,11,12], minutes: "toutes" },
+    2: { nom: "Quarts du matin", heures: [1,2,3,4,5,6,7,8,9,10,11,12], minutes: [0,15,30,45] },
+    3: { nom: "Toutes minutes du matin", heures: [1,2,3,4,5,6,7,8,9,10,11,12], minutes: "toutes" },
     4: { nom: "Heures de l'après-midi", heures: [13,14,15,16,17,18,19,20,21,22,23,0], minutes: [0] },
     5: { nom: "Quarts de l'après-midi", heures: [13,14,15,16,17,18,19,20,21,22,23,0], minutes: [0,15,30,45] },
     6: { nom: "Toutes minutes après-midi", heures: [13,14,15,16,17,18,19,20,21,22,23,0], minutes: "toutes" },
@@ -120,7 +120,7 @@ function validerEntrees(heures, minutes) {
 }
 
 /**
- * Met à jour le score et l'affichage
+ * Met à jour le score (sans affichage, uniquement pour les stats internes)
  * @param {boolean} estCorrect - true si la réponse est correcte
  */
 function mettreAJourScore(estCorrect) {
@@ -129,9 +129,8 @@ function mettreAJourScore(estCorrect) {
     }
     totalQuestions++;
     
-    // Mettre à jour l'affichage
-    document.getElementById('score').textContent = score;
-    document.getElementById('total').textContent = totalQuestions;
+    // Note : L'affichage du score n'est plus nécessaire, 
+    // on affiche uniquement la progression vers le prochain niveau
 }
 
 /**
@@ -240,6 +239,9 @@ function gererNavigationHeures() {
     const inputHeures = document.getElementById('inputHeures');
     const inputMinutes = document.getElementById('inputMinutes');
     
+    // Limiter la saisie à 2 caractères
+    limiterSaisie(inputHeures);
+    
     // Annuler toute vérification en attente
     if (timeoutVerification) {
         clearTimeout(timeoutVerification);
@@ -306,6 +308,9 @@ function gererNavigationMinutes() {
     const inputHeures = document.getElementById('inputHeures');
     const inputMinutes = document.getElementById('inputMinutes');
     
+    // Limiter la saisie à 2 caractères
+    limiterSaisie(inputMinutes);
+    
     // Annuler toute vérification en attente
     if (timeoutVerification) {
         clearTimeout(timeoutVerification);
@@ -334,6 +339,18 @@ function gererNavigationMinutes() {
             // Indiquer que c'est incorrect
             inputMinutes.style.backgroundColor = '#ffcccc';
         }
+        
+        // Logique spéciale : si les heures sont incorrectes mais les minutes correctes, refocuser sur les heures
+        const heures = parseInt(inputHeures.value);
+        if (!isNaN(heures) && !isNaN(minutes) && 
+            heures !== heureActuelle.heures && minutes === heureActuelle.minutes) {
+            
+            // Refocuser automatiquement sur les heures après un court délai
+            setTimeout(() => {
+                inputHeures.focus();
+                inputHeures.select();
+            }, 100);
+        }
     }
 }
 
@@ -348,6 +365,63 @@ function gererToucheEntree(event) {
             timeoutVerification = null;
         }
         verifierReponse();
+    }
+}
+
+/**
+ * Limite la saisie à 2 caractères maximum dans un input
+ * @param {HTMLInputElement} input - L'input à limiter
+ */
+function limiterSaisie(input) {
+    if (input.value.length > 2) {
+        input.value = input.value.slice(0, 2);
+    }
+}
+
+/**
+ * Gère le focus sur un input et vide le contenu si l'input est erroné
+ * @param {HTMLInputElement} input - L'input qui reçoit le focus
+ */
+function gererFocusInput(input) {
+    const valeur = parseInt(input.value);
+    
+    // Vérifier si l'input contient une valeur incorrecte
+    if (!isNaN(valeur) && input.value !== '') {
+        let estIncorrect = false;
+        
+        if (input.id === 'inputHeures') {
+            // Pour les heures : vérifier si c'est différent de l'heure attendue
+            estIncorrect = valeur !== heureActuelle.heures;
+        } else if (input.id === 'inputMinutes') {
+            // Pour les minutes : vérifier si c'est différent des minutes attendues
+            estIncorrect = valeur !== heureActuelle.minutes;
+        }
+        
+        // Si l'input est incorrect, le vider
+        if (estIncorrect) {
+            input.value = '';
+            // Réinitialiser les styles d'erreur
+            input.style.backgroundColor = '';
+            input.style.border = '';
+        }
+    }
+    
+    // Logique spéciale pour les minutes : si les heures sont incorrectes mais les minutes correctes, refocuser sur les heures
+    if (input.id === 'inputMinutes') {
+        const inputHeures = document.getElementById('inputHeures');
+        const heuresValue = parseInt(inputHeures.value);
+        const minutesValue = parseInt(input.value);
+        
+        // Vérifier si les heures sont incorrectes mais les minutes sont correctes
+        if (!isNaN(heuresValue) && !isNaN(minutesValue) && 
+            heuresValue !== heureActuelle.heures && minutesValue === heureActuelle.minutes) {
+            
+            // Refocuser automatiquement sur les heures après un court délai
+            setTimeout(() => {
+                inputHeures.focus();
+                inputHeures.select();
+            }, 100);
+        }
     }
 }
 
