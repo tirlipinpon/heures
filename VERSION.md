@@ -8,6 +8,25 @@ Ce projet utilise le versionnage sémantique (Semantic Versioning).
 
 ## Historique des versions
 
+### v1.3.0 - 2025-10-05
+
+- Amélioration : Système de progression stricte - en cas d'erreur, le compteur de succès consécutifs est remis à 0 et une nouvelle question est générée
+- Amélioration : L'utilisateur doit maintenant réussir 5 heures sans erreur pour passer au niveau suivant (au lieu de simplement faire 5 questions)
+
+### v1.2.1 - 2025-10-05
+
+- Correction : Bug corrigé lors de la saisie de "15" pour 15 minutes - délai d'attente ajouté pour les chiffres ambigus 0-5 dans les minutes (comme pour les heures)
+
+### v1.2.0 - 2025-10-05
+
+- Amélioration : Placeholders des inputs changés de "0" à "x" pour plus de clarté
+- Amélioration : Auto-vidage des inputs erronés au focus pour faciliter la correction
+- Amélioration : Refocus automatique sur les heures quand elles sont vides/incorrectes mais les minutes correctes
+- Amélioration : Limitation de la saisie à 2 caractères maximum dans les inputs
+- Amélioration : Amélioration visuelle du focus des inputs (bordure dorée, animation pulsante, agrandissement)
+- Amélioration : Animation d'erreur (shake + flash) puis reset automatique des valeurs incorrectes
+- Correction : Bug corrigé lors de la saisie de "07" pour 7 heures (délai d'attente pour les chiffres ambigus 0, 1, 2)
+
 ### v1.1.4 - 2025-10-04
 
 - Correction : Modification de l'animation pour animer la 'progression' au lieu du 'score' supprimé (animations.js ligne 201)

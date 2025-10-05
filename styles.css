@@ -74,6 +74,12 @@ body {
         font-size: 1.8em !important;
     }
     
+    .time-input:focus {
+        box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.7), 0 4px 15px rgba(0,0,0,0.4) !important;
+        transform: scale(1.06) !important;
+        border: 2px solid #FFD700 !important;
+    }
+    
     .input-group label {
         font-size: 1em;
         margin-bottom: 3px;
@@ -221,14 +227,23 @@ button:hover {
 
 .time-input:focus {
     outline: none;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.6), 0 4px 20px rgba(0,0,0,0.4);
     background: white;
-    transform: scale(1.05);
+    transform: scale(1.08);
+    border: 3px solid #FFD700;
+    animation: focusPulse 1.5s infinite;
 }
 
 .time-input:valid {
     background: rgba(76, 175, 80, 0.1);
     border: 2px solid rgba(76, 175, 80, 0.3);
+}
+
+.time-input.error {
+    animation: errorShake 0.4s ease-in-out, errorFlash 0.8s ease-in-out;
+    background-color: #ffcccc !important;
+    border: 3px solid #ff6b6b !important;
+    box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.3), 0 4px 15px rgba(255, 107, 107, 0.2) !important;
 }
 
 .submit-btn {
@@ -392,6 +407,40 @@ button:hover {
             calc(sin(var(--angle)) * var(--distance))
         ) rotate(720deg);
         opacity: 0;
+    }
+}
+
+@keyframes focusPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.6), 0 4px 20px rgba(0,0,0,0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 6px rgba(255, 215, 0, 0.8), 0 4px 25px rgba(0,0,0,0.5);
+    }
+}
+
+@keyframes errorShake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+    20%, 40%, 60%, 80% { transform: translateX(3px); }
+}
+
+@keyframes errorFlash {
+    0%, 100% { 
+        background-color: #ffcccc;
+        border-color: #ff6b6b;
+    }
+    25% { 
+        background-color: #ff9999;
+        border-color: #ff4757;
+    }
+    50% { 
+        background-color: #ffcccc;
+        border-color: #ff6b6b;
+    }
+    75% { 
+        background-color: #ff9999;
+        border-color: #ff4757;
     }
 }
 

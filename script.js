@@ -160,6 +160,22 @@ function gererProgressionNiveau() {
 }
 
 /**
+ * Gère les erreurs : remet le compteur à 0 et génère une nouvelle question
+ */
+function gererErreur() {
+    // Réinitialiser les succès consécutifs
+    succesConsecutifs = 0;
+    
+    // Mettre à jour l'affichage de la progression
+    mettreAJourAffichageProgression();
+    
+    // Générer une nouvelle question après l'animation d'erreur
+    setTimeout(() => {
+        nouvelleQuestion();
+    }, 1000); // Attendre 1 seconde après l'animation d'erreur
+}
+
+/**
  * Met à jour l'affichage de la progression
  */
 function mettreAJourAffichageProgression() {
@@ -249,6 +265,30 @@ function gererNavigationHeures() {
     }
     
     const valeur = parseInt(inputHeures.value);
+    const longueurSaisie = inputHeures.value.length;
+    
+    // Si l'utilisateur a tapé 1 seul chiffre et que c'est 0 ou 1, attendre un peu
+    // car il pourrait être en train de taper 07, 08, 09, 10, 11, 12, etc.
+    if (longueurSaisie === 1 && (valeur === 0 || valeur === 1 || valeur === 2)) {
+        // Attendre 800ms pour voir si l'utilisateur tape un deuxième chiffre
+        timeoutVerification = setTimeout(() => {
+            gererValidationHeures();
+        }, 800);
+        return; // Ne pas continuer la validation immédiatement
+    }
+    
+    // Pour les autres cas, valider immédiatement
+    gererValidationHeures();
+}
+
+/**
+ * Valide les heures saisies
+ */
+function gererValidationHeures() {
+    const inputHeures = document.getElementById('inputHeures');
+    const inputMinutes = document.getElementById('inputMinutes');
+    
+    const valeur = parseInt(inputHeures.value);
     
     // Vérifier si les heures sont correctes
     if (!isNaN(valeur) && valeur >= 0 && valeur <= 23) {
@@ -285,18 +325,24 @@ function gererNavigationHeures() {
                 }, 100);
             }
         } else {
-            // Indiquer que c'est incorrect et masquer les minutes
-            inputHeures.style.backgroundColor = '#ffcccc';
+            // Animation d'erreur puis reset automatique
+            inputHeures.classList.add('error');
+            
+            // Après l'animation, vider le champ et retirer la classe d'erreur
+            setTimeout(() => {
+                inputHeures.value = '';
+                inputHeures.classList.remove('error');
+                inputHeures.style.backgroundColor = '';
+                inputHeures.style.border = '';
+                inputHeures.style.boxShadow = '';
+            }, 800); // Durée de l'animation (800ms)
+            
+            // Masquer les minutes
             afficherMinutes = false;
             dessinerHorlogeExercice(heureActuelle.heures, heureActuelle.minutes);
-        }
-        
-        // Si l'heure a 2 chiffres, passer aux minutes même si incorrect
-        if (inputHeures.value.length >= 2) {
-            setTimeout(() => {
-                inputMinutes.focus();
-                inputMinutes.select();
-            }, 300);
+            
+            // Gérer l'erreur : réinitialiser la progression et générer nouvelle question
+            gererErreur();
         }
     }
 }
@@ -318,6 +364,30 @@ function gererNavigationMinutes() {
     }
     
     const minutes = parseInt(inputMinutes.value);
+    const longueurSaisie = inputMinutes.value.length;
+    
+    // Si l'utilisateur a tapé 1 seul chiffre et que c'est 0, 1, 2, 3, 4 ou 5, attendre un peu
+    // car il pourrait être en train de taper 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, etc.
+    if (longueurSaisie === 1 && minutes >= 0 && minutes <= 5) {
+        // Attendre 800ms pour voir si l'utilisateur tape un deuxième chiffre
+        timeoutVerification = setTimeout(() => {
+            gererValidationMinutes();
+        }, 800);
+        return; // Ne pas continuer la validation immédiatement
+    }
+    
+    // Pour les autres cas, valider immédiatement
+    gererValidationMinutes();
+}
+
+/**
+ * Valide les minutes saisies
+ */
+function gererValidationMinutes() {
+    const inputHeures = document.getElementById('inputHeures');
+    const inputMinutes = document.getElementById('inputMinutes');
+    
+    const minutes = parseInt(inputMinutes.value);
     
     // Vérifier si les minutes sont correctes
     if (!isNaN(minutes) && minutes >= 0 && minutes <= 59) {
@@ -336,15 +406,28 @@ function gererNavigationMinutes() {
                     }, 200);
                 }
         } else {
-            // Indiquer que c'est incorrect
-            inputMinutes.style.backgroundColor = '#ffcccc';
+            // Animation d'erreur puis reset automatique
+            inputMinutes.classList.add('error');
+            
+            // Après l'animation, vider le champ et retirer la classe d'erreur
+            setTimeout(() => {
+                inputMinutes.value = '';
+                inputMinutes.classList.remove('error');
+                inputMinutes.style.backgroundColor = '';
+                inputMinutes.style.border = '';
+                inputMinutes.style.boxShadow = '';
+            }, 800); // Durée de l'animation (800ms)
+            
+            // Gérer l'erreur : réinitialiser la progression et générer nouvelle question
+            gererErreur();
         }
         
-        // Logique spéciale : si les heures sont incorrectes mais les minutes correctes, refocuser sur les heures
+        // Logique spéciale : si les heures sont incorrectes ou vides mais les minutes correctes, refocuser sur les heures
         const heures = parseInt(inputHeures.value);
-        if (!isNaN(heures) && !isNaN(minutes) && 
-            heures !== heureActuelle.heures && minutes === heureActuelle.minutes) {
-            
+        const heuresVides = inputHeures.value === '' || isNaN(heures);
+        const heuresIncorrectes = !heuresVides && heures !== heureActuelle.heures;
+        
+        if (!isNaN(minutes) && minutes === heureActuelle.minutes && (heuresVides || heuresIncorrectes)) {
             // Refocuser automatiquement sur les heures après un court délai
             setTimeout(() => {
                 inputHeures.focus();
@@ -406,15 +489,17 @@ function gererFocusInput(input) {
         }
     }
     
-    // Logique spéciale pour les minutes : si les heures sont incorrectes mais les minutes correctes, refocuser sur les heures
+    // Logique spéciale pour les minutes : si les heures sont incorrectes ou vides mais les minutes correctes, refocuser sur les heures
     if (input.id === 'inputMinutes') {
         const inputHeures = document.getElementById('inputHeures');
         const heuresValue = parseInt(inputHeures.value);
         const minutesValue = parseInt(input.value);
         
-        // Vérifier si les heures sont incorrectes mais les minutes sont correctes
-        if (!isNaN(heuresValue) && !isNaN(minutesValue) && 
-            heuresValue !== heureActuelle.heures && minutesValue === heureActuelle.minutes) {
+        const heuresVides = inputHeures.value === '' || isNaN(heuresValue);
+        const heuresIncorrectes = !heuresVides && heuresValue !== heureActuelle.heures;
+        
+        // Vérifier si les heures sont incorrectes ou vides mais les minutes sont correctes
+        if (!isNaN(minutesValue) && minutesValue === heureActuelle.minutes && (heuresVides || heuresIncorrectes)) {
             
             // Refocuser automatiquement sur les heures après un court délai
             setTimeout(() => {
