@@ -1,9 +1,9 @@
 /**
  * Service Worker pour la mise à jour automatique de l'application
- * Version: 1.5.1
+ * Version: 1.6.0
  */
 
-const VERSION = 'v1.5.1';
+const VERSION = 'v1.6.0';
 const CACHE_NAME = `horloge-cache-${VERSION}`;
 
 // Liste des fichiers à mettre en cache
@@ -13,6 +13,7 @@ const urlsToCache = [
     './styles.css',
     './horloge.js',
     './animations.js',
+    './sessionManager.js',
     './joueurs.js',
     './script.js'
 ];

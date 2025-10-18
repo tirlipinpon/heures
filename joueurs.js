@@ -3,9 +3,11 @@
  * Gère l'authentification, la progression et le stockage des données des joueurs
  */
 
+// Instance globale du SessionManager
+const sessionManager = new SessionManager();
+
 // Clés pour le localStorage
 const CLE_JOUEURS = 'horloge_joueurs';
-const CLE_JOUEUR_ACTUEL = 'horloge_joueur_actuel';
 
 /**
  * Structure d'un joueur :
@@ -39,26 +41,26 @@ function sauvegarderJoueurs(joueurs) {
 }
 
 /**
- * Récupère le nom du joueur actuellement connecté
+ * Récupère le nom du joueur actuellement connecté via SessionManager
  * @returns {string|null} Nom du joueur ou null
  */
 function obtenirJoueurActuel() {
-    return localStorage.getItem(CLE_JOUEUR_ACTUEL);
+    return sessionManager.getCurrentUser();
 }
 
 /**
- * Définit le joueur actuel
+ * Définit le joueur actuel via SessionManager
  * @param {string} nom - Nom du joueur
  */
 function definirJoueurActuel(nom) {
-    localStorage.setItem(CLE_JOUEUR_ACTUEL, nom);
+    sessionManager.login(nom);
 }
 
 /**
- * Déconnexion du joueur actuel
+ * Déconnexion du joueur actuel via SessionManager
  */
 function deconnecterJoueur() {
-    localStorage.removeItem(CLE_JOUEUR_ACTUEL);
+    sessionManager.logout();
 }
 
 /**

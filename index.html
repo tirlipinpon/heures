@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🕐 Horloge Interactive</title>
-    <link rel="stylesheet" href="styles.css?v=1.5.1">
+    <link rel="stylesheet" href="styles.css?v=1.6.0">
 </head>
 <body>
     <!-- Interface de jeu -->
     <div id="jeuContainer" class="container">
-        <div class="version">v1.5.1</div>
+        <div class="version">v1.6.0</div>
         <a href="../index.html" class="home-button" title="Retour au menu principal">🏠 Menu</a>
         
         <!-- Bouton de connexion discret -->
@@ -110,13 +110,15 @@
         }
     </script>
     
+    <!-- Module SessionManager (DOIT être chargé en premier) -->
+    <script src="sessionManager.js?v=1.6.0"></script>
     <!-- Module de dessin de l'horloge -->
-    <script src="horloge.js?v=1.5.1"></script>
+    <script src="horloge.js?v=1.6.0"></script>
     <!-- Module d'animations -->
-    <script src="animations.js?v=1.5.1"></script>
+    <script src="animations.js?v=1.6.0"></script>
     <!-- Module de gestion des joueurs -->
-    <script src="joueurs.js?v=1.5.1"></script>
+    <script src="joueurs.js?v=1.6.0"></script>
     <!-- Module de logique de l'exercice -->
-    <script src="script.js?v=1.5.1"></script>
+    <script src="script.js?v=1.6.0"></script>
 </body>
 </html>

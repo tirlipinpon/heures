@@ -8,6 +8,15 @@ Ce projet utilise le versionnage sémantique (Semantic Versioning).
 
 ## Historique des versions
 
+### v1.6.0 - 2025-10-18
+
+- Nouvelle fonctionnalité : Intégration du SessionManager pour une gestion intelligente des sessions
+- Amélioration : Utilisation de sessionStorage + localStorage pour la persistance
+- Amélioration : L'utilisateur reste connecté au refresh (F5) mais est déconnecté à la fermeture de l'onglet
+- Amélioration : Partage possible du nom d'utilisateur entre plusieurs applications (préfixe shared_apps_)
+- Ajout : Fichier sessionManager.js réutilisable et autonome
+- Amélioration : Meilleure gestion de la session avec logs dans la console
+
 ### v1.5.1 - 2025-10-18
 
 - Correction : Quand il y a une erreur (heures ou minutes), l'horloge reste la même au lieu de générer une nouvelle question
