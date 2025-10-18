@@ -166,7 +166,7 @@ function gererProgressionNiveau() {
 }
 
 /**
- * Gère les erreurs : remet le compteur à 0 et génère une nouvelle question
+ * Gère les erreurs : remet le compteur à 0 mais garde la même question
  */
 function gererErreur() {
     // Réinitialiser les succès consécutifs
@@ -178,10 +178,7 @@ function gererErreur() {
     // Sauvegarder la progression après une erreur
     sauvegarderProgressionActuelle();
     
-    // Générer une nouvelle question après l'animation d'erreur
-    setTimeout(() => {
-        nouvelleQuestion();
-    }, 1000); // Attendre 1 seconde après l'animation d'erreur
+    // NE PAS générer une nouvelle question, garder la même horloge
 }
 
 /**
@@ -344,13 +341,16 @@ function gererValidationHeures() {
                 inputHeures.style.backgroundColor = '';
                 inputHeures.style.border = '';
                 inputHeures.style.boxShadow = '';
+                
+                // Refocus sur l'input après l'animation
+                inputHeures.focus();
             }, 800); // Durée de l'animation (800ms)
             
             // Masquer les minutes
             afficherMinutes = false;
             dessinerHorlogeExercice(heureActuelle.heures, heureActuelle.minutes);
             
-            // Gérer l'erreur : réinitialiser la progression et générer nouvelle question
+            // Gérer l'erreur : réinitialiser la progression SANS changer l'heure
             gererErreur();
         }
     }
@@ -425,9 +425,12 @@ function gererValidationMinutes() {
                 inputMinutes.style.backgroundColor = '';
                 inputMinutes.style.border = '';
                 inputMinutes.style.boxShadow = '';
+                
+                // Refocus sur l'input après l'animation
+                inputMinutes.focus();
             }, 800); // Durée de l'animation (800ms)
             
-            // Gérer l'erreur : réinitialiser la progression et générer nouvelle question
+            // Gérer l'erreur : réinitialiser la progression SANS changer l'heure
             gererErreur();
         }
         

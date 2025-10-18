@@ -8,6 +8,13 @@ Ce projet utilise le versionnage sémantique (Semantic Versioning).
 
 ## Historique des versions
 
+### v1.5.1 - 2025-10-18
+
+- Correction : Quand il y a une erreur (heures ou minutes), l'horloge reste la même au lieu de générer une nouvelle question
+- Amélioration : Tu peux réessayer la même heure après une erreur
+- Amélioration : Le curseur se remet automatiquement dans le champ après une erreur
+- Amélioration : Meilleure expérience d'apprentissage - on continue jusqu'à trouver la bonne réponse
+
 ### v1.5.0 - 2025-10-18
 
 - Refonte complète : Suppression de l'écran de connexion plein écran
