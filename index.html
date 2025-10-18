@@ -4,12 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🕐 Horloge Interactive</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=1.5.0">
 </head>
 <body>
-    <div class="container">
-        <div class="version">v1.3.0</div>
+    <!-- Interface de jeu -->
+    <div id="jeuContainer" class="container">
+        <div class="version">v1.5.0</div>
         <a href="../index.html" class="home-button" title="Retour au menu principal">🏠 Menu</a>
+        
+        <!-- Bouton de connexion discret -->
+        <button id="btnConnexion" onclick="ouvrirPopupConnexion()" class="btn-connexion-discret" title="Se connecter pour sauvegarder">
+            👤 <span id="nomJoueurActuel">Invité</span>
+        </button>
+        
+        <!-- Popup de connexion -->
+        <div id="popupConnexion" class="popup-connexion" style="display: none;" onclick="fermerPopupConnexion(event)">
+            <div class="popup-contenu" onclick="event.stopPropagation()">
+                <button class="popup-fermer" onclick="fermerPopupConnexion()">✕</button>
+                <h3>👤 Connexion</h3>
+                
+                <div id="listeJoueurs" class="liste-joueurs-popup">
+                    <!-- Rempli dynamiquement -->
+                </div>
+                
+                <div class="nouveau-joueur-popup">
+                    <input type="text" 
+                           id="inputNouveauJoueur" 
+                           class="input-nom-popup" 
+                           placeholder="Nouveau joueur" 
+                           onkeydown="gererEntreeNouveauJoueur(event)"
+                           maxlength="20">
+                    <button onclick="creerNouveauJoueur()" class="btn-creer-popup">✓</button>
+                </div>
+                
+                <button onclick="passerEnModeInvite()" class="btn-invite-popup">🎮 Continuer sans compte</button>
+            </div>
+        </div>
         
         <div class="question-container">
             <canvas id="horlogeExercice" width="450" height="450"></canvas>
@@ -40,11 +70,53 @@
         <div id="feedback" class="feedback" style="display: none;"></div>
     </div>
 
+    <!-- Enregistrement du Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((registration) => {
+                        console.log('Service Worker enregistré avec succès:', registration.scope);
+                        
+                        // Vérifier les mises à jour toutes les 10 secondes
+                        setInterval(() => {
+                            registration.update();
+                        }, 10000);
+                        
+                        // Gérer les mises à jour
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    // Une nouvelle version est disponible
+                                    console.log('Nouvelle version disponible ! Rechargement...');
+                                    
+                                    // Dire au nouveau SW de prendre le contrôle immédiatement
+                                    newWorker.postMessage({ type: 'SKIP_WAITING' });
+                                }
+                            });
+                        });
+                        
+                        // Recharger quand le nouveau SW prend le contrôle
+                        navigator.serviceWorker.addEventListener('controllerchange', () => {
+                            window.location.reload();
+                        });
+                    })
+                    .catch((error) => {
+                        console.log('Échec de l\'enregistrement du Service Worker:', error);
+                    });
+            });
+        }
+    </script>
+    
     <!-- Module de dessin de l'horloge -->
-    <script src="horloge.js"></script>
+    <script src="horloge.js?v=1.5.0"></script>
     <!-- Module d'animations -->
-    <script src="animations.js"></script>
+    <script src="animations.js?v=1.5.0"></script>
+    <!-- Module de gestion des joueurs -->
+    <script src="joueurs.js?v=1.5.0"></script>
     <!-- Module de logique de l'exercice -->
-    <script src="script.js"></script>
+    <script src="script.js?v=1.5.0"></script>
 </body>
 </html>

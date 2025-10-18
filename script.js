@@ -129,6 +129,9 @@ function mettreAJourScore(estCorrect) {
     }
     totalQuestions++;
     
+    // Sauvegarder la progression après chaque question
+    sauvegarderProgressionActuelle();
+    
     // Note : L'affichage du score n'est plus nécessaire, 
     // on affiche uniquement la progression vers le prochain niveau
 }
@@ -157,6 +160,9 @@ function gererProgressionNiveau() {
     }
     
     mettreAJourAffichageProgression();
+    
+    // Sauvegarder la progression après chaque changement de niveau
+    sauvegarderProgressionActuelle();
 }
 
 /**
@@ -168,6 +174,9 @@ function gererErreur() {
     
     // Mettre à jour l'affichage de la progression
     mettreAJourAffichageProgression();
+    
+    // Sauvegarder la progression après une erreur
+    sauvegarderProgressionActuelle();
     
     // Générer une nouvelle question après l'animation d'erreur
     setTimeout(() => {
@@ -544,8 +553,14 @@ function toggleAffichageMinutes() {
  * Initialise l'exercice au chargement de la page
  */
 function initialiserExercice() {
-    mettreAJourAffichageProgression();
-    nouvelleQuestion();
+    // Initialiser le système de joueurs
+    const joueurCharge = initialiserJoueurs();
+    
+    // Si un joueur est chargé, initialiser le jeu
+    if (joueurCharge) {
+        mettreAJourAffichageProgression();
+        nouvelleQuestion();
+    }
 }
 
 // Démarrer l'exercice quand le DOM est chargé

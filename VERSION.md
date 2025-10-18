@@ -8,6 +8,31 @@ Ce projet utilise le versionnage sémantique (Semantic Versioning).
 
 ## Historique des versions
 
+### v1.4.2 - 2025-10-18
+
+- Nouvelle fonctionnalité : Mode invité - possibilité de jouer sans créer de compte
+- Amélioration : Bouton "🎮 Jouer sans compte" sur l'écran de connexion
+- Amélioration : En mode invité, la progression n'est pas sauvegardée (recommence au niveau 1 à chaque session)
+- Amélioration : Affichage "Mode Invité" dans la barre de joueur
+
+### v1.4.1 - 2025-10-18
+
+- Amélioration : Ajout d'un Service Worker pour forcer la mise à jour automatique de l'application
+- Amélioration : Cache busting avec numéro de version sur tous les fichiers CSS/JS (?v=1.4.1)
+- Amélioration : L'application se recharge automatiquement quand une nouvelle version est détectée
+- Correction : Plus besoin de vider le cache du navigateur manuellement pour voir les mises à jour
+
+### v1.4.0 - 2025-10-18
+
+- Nouvelle fonctionnalité : Système de connexion et gestion multi-joueurs
+- Nouvelle fonctionnalité : Sauvegarde automatique de la progression par joueur (niveau, succès consécutifs, score total)
+- Nouvelle fonctionnalité : Écran de connexion permettant de sélectionner un joueur existant ou de créer un nouveau profil
+- Nouvelle fonctionnalité : Affichage des statistiques de chaque joueur (niveau actuel, score total, pourcentage de réussite)
+- Nouvelle fonctionnalité : Possibilité de supprimer un profil joueur
+- Nouvelle fonctionnalité : Bouton de déconnexion pour changer de joueur pendant le jeu
+- Amélioration : Les données des joueurs sont sauvegardées dans le localStorage du navigateur
+- Ajout : Module joueurs.js pour gérer toute la logique d'authentification et de progression
+
 ### v1.3.0 - 2025-10-05
 
 - Amélioration : Système de progression stricte - en cas d'erreur, le compteur de succès consécutifs est remis à 0 et une nouvelle question est générée
