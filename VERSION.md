@@ -8,6 +8,15 @@ Ce projet utilise le versionnage sémantique (Semantic Versioning).
 
 ## Historique des versions
 
+### v1.5.0 - 2025-10-18
+
+- Refonte complète : Suppression de l'écran de connexion plein écran
+- Amélioration : L'application démarre directement en mode invité (jeu immédiat)
+- Nouvelle fonctionnalité : Petit bouton de connexion discret en haut à droite
+- Nouvelle fonctionnalité : Popup léger et simple pour se connecter quand on le souhaite
+- Amélioration : Interface plus épurée et plus fluide
+- Amélioration : Pas besoin de se connecter pour jouer, la connexion est optionnelle
+
 ### v1.4.2 - 2025-10-18
 
 - Nouvelle fonctionnalité : Mode invité - possibilité de jouer sans créer de compte

@@ -1,9 +1,9 @@
 /**
  * Service Worker pour la mise à jour automatique de l'application
- * Version: 1.4.2
+ * Version: 1.5.0
  */
 
-const VERSION = 'v1.4.2';
+const VERSION = 'v1.5.0';
 const CACHE_NAME = `horloge-cache-${VERSION}`;
 
 // Liste des fichiers à mettre en cache

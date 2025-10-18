@@ -315,26 +315,6 @@ function afficherNomJoueurActuel() {
     }
 }
 
-/**
- * Déconnecte le joueur et retourne à l'écran de connexion
- */
-function deconnexion() {
-    // Sauvegarder avant de déconnecter
-    sauvegarderProgressionActuelle();
-    
-    // Déconnecter
-    deconnecterJoueur();
-    
-    // Réinitialiser les variables du jeu
-    niveauActuel = 1;
-    succesConsecutifs = 0;
-    questionsNiveau7 = 0;
-    score = 0;
-    totalQuestions = 0;
-    
-    // Afficher l'écran de connexion
-    afficherEcranConnexion();
-}
 
 /**
  * Confirme la suppression d'un joueur
@@ -371,13 +351,10 @@ function jouerSansCompte() {
     score = 0;
     totalQuestions = 0;
     
-    // Cacher l'écran de connexion et afficher le jeu
-    cacherEcranConnexion();
-    
-    // Afficher "Mode Invité" au lieu du nom
+    // Afficher "Invité" au lieu du nom
     const element = document.getElementById('nomJoueurActuel');
     if (element) {
-        element.textContent = 'Mode Invité';
+        element.textContent = 'Invité';
     }
     
     // Démarrer une nouvelle question
@@ -399,31 +376,23 @@ function estModeInvite() {
 function initialiserJoueurs() {
     const joueurActuel = obtenirJoueurActuel();
     
-    if (joueurActuel) {
-        // Vérifier si c'est le mode invité
-        if (estModeInvite()) {
-            // Mode invité, réinitialiser au niveau 1
-            jouerSansCompte();
-            return true;
-        }
-        
-        // Un joueur est déjà connecté, charger sa progression
+    if (joueurActuel && !estModeInvite()) {
+        // Un joueur est connecté, charger sa progression
         const donnees = obtenirDonneesJoueur(joueurActuel);
         
         if (donnees) {
             chargerProgressionJoueur(donnees);
-            cacherEcranConnexion();
             afficherNomJoueurActuel();
             return true; // Joueur chargé avec succès
         } else {
-            // Le joueur n'existe plus, déconnecter
+            // Le joueur n'existe plus, passer en mode invité
             deconnecterJoueur();
         }
     }
     
-    // Aucun joueur connecté, afficher l'écran de connexion
-    afficherEcranConnexion();
-    return false; // Pas de joueur chargé
+    // Démarrer en mode invité par défaut
+    jouerSansCompte();
+    return true;
 }
 
 

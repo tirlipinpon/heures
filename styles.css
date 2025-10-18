@@ -502,101 +502,60 @@ button:hover {
     }
 }
 
-/* Styles pour l'écran de connexion */
-.ecran-connexion {
+/* Bouton de connexion discret */
+.btn-connexion-discret {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    padding: 8px 15px;
+    font-size: 0.9em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    z-index: 999;
+}
+
+.btn-connexion-discret:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+}
+
+/* Popup de connexion */
+.popup-connexion {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    display: flex;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    z-index: 10000;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    z-index: 10000;
 }
 
-.container-connexion {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 40px;
+.popup-contenu {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 20px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    max-width: 600px;
+    padding: 25px;
+    max-width: 400px;
     width: 90%;
-    max-height: 90vh;
+    max-height: 80vh;
     overflow-y: auto;
-}
-
-.container-connexion h1 {
-    color: white;
-    font-size: 2.5em;
-    margin: 0 0 10px 0;
-    text-align: center;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-.container-connexion h2 {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.3em;
-    margin: 0 0 20px 0;
-    text-align: center;
-}
-
-.container-connexion h3 {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.1em;
-    margin: 0 0 15px 0;
-    text-align: center;
-}
-
-.liste-joueurs {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
-    max-height: 300px;
-    overflow-y: auto;
-    padding: 5px;
-}
-
-.carte-joueur {
-    background: rgba(255, 255, 255, 0.2);
-    padding: 15px 20px;
-    border-radius: 15px;
-    border: 2px solid transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     position: relative;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
 }
 
-.carte-joueur:hover {
-    background: rgba(255, 255, 255, 0.3);
-    border-color: rgba(255, 255, 255, 0.5);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.nom-joueur {
-    font-size: 1.3em;
-    font-weight: bold;
-    color: white;
-    margin-bottom: 5px;
-}
-
-.stats-joueur {
-    font-size: 0.9em;
-    color: rgba(255, 255, 255, 0.8);
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-}
-
-.btn-supprimer {
+.popup-fermer {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -605,200 +564,173 @@ button:hover {
     border-radius: 50%;
     width: 30px;
     height: 30px;
+    color: white;
+    font-size: 1.2em;
     cursor: pointer;
-    font-size: 1em;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
-    padding: 0;
 }
 
-.btn-supprimer:hover {
+.popup-fermer:hover {
+    background: rgba(244, 67, 54, 1);
+    transform: rotate(90deg);
+}
+
+.popup-contenu h3 {
+    color: white;
+    font-size: 1.5em;
+    margin: 0 0 20px 0;
+    text-align: center;
+}
+
+/* Liste des joueurs dans le popup */
+.liste-joueurs-popup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 15px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.carte-joueur-popup {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 12px 15px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid transparent;
+}
+
+.carte-joueur-popup:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateX(5px);
+}
+
+.info-joueur-popup {
+    flex: 1;
+}
+
+.nom-joueur-popup {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 3px;
+}
+
+.stats-joueur-popup {
+    font-size: 0.85em;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.btn-supprimer-popup {
+    background: rgba(244, 67, 54, 0.6);
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    color: white;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-supprimer-popup:hover {
     background: rgba(244, 67, 54, 1);
     transform: scale(1.1);
 }
 
-.aucun-joueur {
+.aucun-joueur-popup {
     text-align: center;
     color: rgba(255, 255, 255, 0.6);
     font-style: italic;
-    padding: 20px;
-}
-
-.separateur {
-    text-align: center;
-    margin: 25px 0;
-    position: relative;
-}
-
-.separateur::before,
-.separateur::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    width: 40%;
-    height: 1px;
-    background: rgba(255, 255, 255, 0.3);
-}
-
-.separateur::before {
-    left: 0;
-}
-
-.separateur::after {
-    right: 0;
-}
-
-.separateur span {
-    color: rgba(255, 255, 255, 0.7);
-    font-weight: bold;
-    background: transparent;
-    padding: 0 15px;
-}
-
-.nouveau-joueur {
-    text-align: center;
-}
-
-.input-nom-joueur {
-    width: 100%;
     padding: 15px;
-    font-size: 1.2em;
-    border: none;
-    border-radius: 15px;
-    background: rgba(255, 255, 255, 0.9);
-    color: #333;
-    text-align: center;
-    font-weight: bold;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
+    font-size: 0.9em;
+}
+
+/* Nouveau joueur dans le popup */
+.nouveau-joueur-popup {
+    display: flex;
+    gap: 8px;
     margin-bottom: 15px;
 }
 
-.input-nom-joueur:focus {
-    outline: none;
-    box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.6), 0 4px 20px rgba(0, 0, 0, 0.4);
-    background: white;
-    transform: scale(1.02);
+.input-nom-popup {
+    flex: 1;
+    padding: 10px;
+    font-size: 1em;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    font-weight: 600;
 }
 
-.btn-creer {
-    padding: 15px 30px;
+.input-nom-popup:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.5);
+}
+
+.btn-creer-popup {
+    padding: 10px 20px;
     font-size: 1.2em;
     font-weight: bold;
     border: none;
-    border-radius: 25px;
+    border-radius: 10px;
     background: rgba(76, 175, 80, 0.8);
     color: white;
     cursor: pointer;
     transition: all 0.3s ease;
-    border: 2px solid rgba(76, 175, 80, 0.9);
-    width: 100%;
 }
 
-.btn-creer:hover {
+.btn-creer-popup:hover {
     background: rgba(76, 175, 80, 1);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.5);
+    transform: scale(1.05);
 }
 
-/* Barre joueur dans le jeu */
-.barre-joueur {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 15px;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 15px;
-    margin-bottom: 15px;
-}
-
-.joueur-actuel {
-    font-size: 1.1em;
-    font-weight: bold;
-    color: white;
-}
-
-.btn-deconnexion {
-    padding: 8px 15px;
-    font-size: 0.9em;
-    border: none;
-    border-radius: 20px;
-    background: rgba(244, 67, 54, 0.7);
-    color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-deconnexion:hover {
-    background: rgba(244, 67, 54, 1);
-    transform: translateY(-2px);
-}
-
-/* Mode invité */
-.mode-invite {
-    text-align: center;
-    margin-top: 10px;
-}
-
-.btn-invite {
-    padding: 15px 30px;
-    font-size: 1.2em;
-    font-weight: bold;
-    border: none;
-    border-radius: 25px;
-    background: rgba(33, 150, 243, 0.8);
-    color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 2px solid rgba(33, 150, 243, 0.9);
+.btn-invite-popup {
     width: 100%;
+    padding: 12px;
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    background: rgba(33, 150, 243, 0.7);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(33, 150, 243, 0.8);
 }
 
-.btn-invite:hover {
+.btn-invite-popup:hover {
     background: rgba(33, 150, 243, 1);
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.5);
 }
 
-.info-invite {
-    font-size: 0.85em;
-    color: rgba(255, 255, 255, 0.7);
-    font-style: italic;
-    margin-top: 8px;
-}
-
-/* Responsive pour l'écran de connexion */
+/* Responsive pour le popup */
 @media (max-width: 768px) {
-    .container-connexion {
-        padding: 25px 20px;
+    .popup-contenu {
         width: 95%;
+        padding: 20px 15px;
     }
 
-    .container-connexion h1 {
-        font-size: 2em;
+    .popup-contenu h3 {
+        font-size: 1.3em;
     }
-
-    .container-connexion h2 {
-        font-size: 1.1em;
-    }
-
-    .nom-joueur {
-        font-size: 1.1em;
-    }
-
-    .stats-joueur {
+    
+    .btn-connexion-discret {
+        top: 8px;
+        right: 8px;
         font-size: 0.8em;
-    }
-
-    .barre-joueur {
-        flex-direction: column;
-        gap: 10px;
-        padding: 15px;
-    }
-
-    .btn-deconnexion {
-        width: 100%;
+        padding: 6px 12px;
     }
 }
