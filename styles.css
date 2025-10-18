@@ -22,6 +22,29 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
+.home-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    z-index: 1001;
+}
+
+.home-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+}
+
 /* Mobile: container collé au top */
 @media (max-width: 768px) {
     body {
@@ -469,5 +492,12 @@ button:hover {
         top: 8px;
         right: 8px;
         font-size: 0.7em;
+    }
+
+    .home-button {
+        font-size: 0.75em;
+        padding: 6px 10px;
+        top: 8px;
+        left: 8px;
     }
 }
